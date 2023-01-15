@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HuffmanKod", "HuffmanKod\HuffmanKod.vcxproj", "{2CC7A8A4-8E84-4650-B6B6-FF6290E77914}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HuffmanCode", "HuffmanCode\HuffmanCode.vcxproj", "{280023C4-AB42-43D9-B518-AA9031E102A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{2CC7A8A4-8E84-4650-B6B6-FF6290E77914}.Release|x64.Build.0 = Release|x64
 		{2CC7A8A4-8E84-4650-B6B6-FF6290E77914}.Release|x86.ActiveCfg = Release|Win32
 		{2CC7A8A4-8E84-4650-B6B6-FF6290E77914}.Release|x86.Build.0 = Release|Win32
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Debug|x64.ActiveCfg = Debug|x64
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Debug|x64.Build.0 = Debug|x64
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Debug|x86.ActiveCfg = Debug|Win32
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Debug|x86.Build.0 = Debug|Win32
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Release|x64.ActiveCfg = Release|x64
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Release|x64.Build.0 = Release|x64
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Release|x86.ActiveCfg = Release|Win32
+		{280023C4-AB42-43D9-B518-AA9031E102A7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
