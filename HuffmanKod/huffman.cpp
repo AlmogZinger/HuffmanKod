@@ -9,7 +9,7 @@ using namespace std;
 
 int frequencyTable[26] = { 0 };
 
-string codedTable[26] = { 0 };
+string codedTable[26] = { "" };
 
 void HuffmanTree::encodeLetters(HuffmanNode* root, string str)
 {
@@ -71,7 +71,7 @@ HuffmanTree::HuffmanTree(string word)
 		if (frequencyTable[i] > 0)
 		{
 			//Push to the queue 
-			temp.push_back('a' + i);
+			temp = ('a' + i);
 			pQueue.push(new HuffmanNode(temp, frequencyTable[i]));
 		}
 	}

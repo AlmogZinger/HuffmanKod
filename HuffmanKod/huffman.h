@@ -58,12 +58,12 @@ class HuffmanTree
 	string encodeTree(HuffmanNode* root,string);
 	void encodeLetters(HuffmanNode* root) { encodeLetters(root,""); }
 	void encodeLetters(HuffmanNode* root, string);
-	void decode(string sourceFileName, string destFileName);
-	int buildFrequencyTable(string text);
-	void buildTree(int* frequencyTable);
-	void buildTree(int n, string letters, string tree);
-	void buildCodedTabe();
-	void encode(char letter, string* codedTable);
+	//void decode(string sourceFileName, string destFileName);
+	//int buildFrequencyTable(string text);
+	//void buildTree(int* frequencyTable);
+	//void buildTree(int n, string letters, string tree);
+	//void buildCodedTabe();
+	//void encode(char letter, string* codedTable);
 	~HuffmanTree();
 };
 
