@@ -22,7 +22,7 @@ void HuffmanTree::encodeLetters(HuffmanNode* root, string str)
 	//If a leaf
 	else
 	{
-		code
+		codedTable[CHAR_TO_INDEX(root->str[0])] = str;
 	}
 }
 
