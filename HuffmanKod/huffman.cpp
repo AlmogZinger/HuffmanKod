@@ -4,7 +4,6 @@
 #include <string>
 #include <cmath>
 #include "huffman.h"
-#include <unordered_map>
 using namespace std;
 
 int frequencyTable[26] = { 0 };
@@ -63,7 +62,7 @@ int HuffmanTree::buildFrequencyTable(string text)
 }
 HuffmanTree::HuffmanTree(string word)
 {
-	HuffmanNode* first;
+	HuffmanNode* first = new HuffmanNode();
 	string temp = "";
 	numOfCherInText = buildFrequencyTable(word);
 	for (int i = 0; i < 26; i++)
@@ -90,8 +89,20 @@ HuffmanTree::HuffmanTree(string word)
 		}
 	}
 
-	treeCode = encodeTree(first);
-	//prepare the code table
+	root = first;
 
+	//Encode the tree
+	treeCode = encodeTree(root);
+	//prepare the code table
+	encodeLetters(root);
 	
+	cout << "The encoded string is:\n"
+		<< numOfCherInText+"\n"
+		<< first->str+"\n"
+		<< treeCode+"\n";
+	for (int i = 0; i < word.size(); i++)
+	{
+		cout << codedTable[CHAR_TO_INDEX(word[i])];
+	}
+	cout <<endl;
 }
