@@ -23,6 +23,13 @@ public:
 	HuffmanNode* left;
 	HuffmanNode* right;
 
+	HuffmanNode()
+	{
+		str = "";
+		frequency = 0;
+		left = nullptr;
+		right = nullptr;
+	}
 	HuffmanNode(string str, int f) {
 		this->str = str;
 		this->frequency = f;
@@ -36,10 +43,11 @@ public:
 		right = r;
 		left = l;
 	}
+
 	friend compareNode;
 };
 
-class compareNode 
+class compareNode
 {
 public:
 	bool operator()(HuffmanNode* const& n1, HuffmanNode* const& n2)
@@ -50,9 +58,13 @@ public:
 
 class HuffmanTree
 {
+
+
+	HuffmanNode* root;
 	priority_queue<HuffmanNode*, vector<HuffmanNode*>, compareNode> pQueue;
 	int numOfCherInText;
 	string treeCode;
+public:
 	HuffmanTree(string word);
 	string encodeTree(HuffmanNode* root);
 	string encodeTree(HuffmanNode* root,string);
@@ -60,10 +72,13 @@ class HuffmanTree
 	void encodeLetters(HuffmanNode* root, string);
 	void decode(string sourceFileName, string destFileName);
 	int buildFrequencyTable(string text);
-	void buildTree(int* frequencyTable);
+	/*void buildTree(int* frequencyTable);
 	void buildTree(int n, string letters, string tree);
 	void buildCodedTabe();
-	void encode(char letter, string* codedTable);
-	~HuffmanTree();
+	void encode(char letter, string* codedTable);*/
+	~HuffmanTree()
+	{
+		delete root;
+	}
 };
 
