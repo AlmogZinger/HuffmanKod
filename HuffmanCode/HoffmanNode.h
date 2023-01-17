@@ -1,3 +1,5 @@
+// header file to manage huffman tree
+
 #pragma once
 #include <string>
 
