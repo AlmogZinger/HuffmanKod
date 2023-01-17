@@ -1,84 +1,51 @@
+// header file to manage huffman tree
+
 #pragma once
-#include <iostream>
-#include <queue>
-#include <list>
 #include <string>
-#include <cmath>
+
 using namespace std;
 
-// Alphabet size (# of symbols) 
-#define ALPHABET_SIZE (26) 
+class compaireNodes;
 
-// Converts key current character into index 
-// use only 'a' through 'z' and lower case 
-#define CHAR_TO_INDEX(c) ((int)c - (int)'a') 
-
-
-class compareNode;
-class HuffmanNode
+class HoffmanNode
 {
-public:
-	string str;
+private:
 	int frequency;
-	HuffmanNode* left;
-	HuffmanNode* right;
-
-	HuffmanNode()
+	char nodeValue;
+	HoffmanNode* leftSon;
+	HoffmanNode* rightSon;
+public:
+	HoffmanNode(int freq = 0, char value = ' ', HoffmanNode* left = nullptr, HoffmanNode* right = nullptr)
 	{
-		str = "";
-		frequency = 0;
-		left = nullptr;
-		right = nullptr;
-	}
-	HuffmanNode(string str, int f) {
-		this->str = str;
-		this->frequency = f;
-		right = nullptr;
-		left = nullptr;
+		frequency = freq; nodeValue = value; leftSon = left; rightSon = right;
 	}
 
-	HuffmanNode(string str, int f, HuffmanNode* const& r, HuffmanNode* const& l) {
-		this->str = str;
-		this->frequency = f;
-		right = r;
-		left = l;
-	}
+	friend compaireNodes;
 
-	friend compareNode;
+	HoffmanNode* buildTreeFromStr(string str);
+	HoffmanNode* buildTreeFromCode(string code);
+	void treeFromCode(HoffmanNode*& node, string& str);
+	void buildFreqTable(string str, int*& freq);
+	string lettersByFreq(HoffmanNode* source);
+	void inOrderTree(HoffmanNode* node, string& str);
+	void insertValues(HoffmanNode* source, string& str);
+	void buildCodeTable(HoffmanNode* source, string code, string*& codeTab);
+	string codeToText(string str, HoffmanNode* source);
+	void encode(string& code, string& text, HoffmanNode* node);
+	void treeStructure(HoffmanNode* node, string& strct);
+	void textToCode(string str);
+	void codeToText(int num, string letters, string strct, string code);
+	void printTree(HoffmanNode* tree);
 };
 
-class compareNode
-{
-public:
-	bool operator()(HuffmanNode* const& n1, HuffmanNode* const& n2)
-	{
-		return n1->frequency > n2->frequency;
-	}
-};
-
-class HuffmanTree
+class compaireNodes
 {
 
-
-	HuffmanNode* root;
-	priority_queue<HuffmanNode*, vector<HuffmanNode*>, compareNode> pQueue;
-	int numOfCherInText;
-	string treeCode;
 public:
-	HuffmanTree(string word);
-	string encodeTree(HuffmanNode* root);
-	string encodeTree(HuffmanNode* root,string);
-	void encodeLetters(HuffmanNode* root) { encodeLetters(root,""); }
-	void encodeLetters(HuffmanNode* root, string);
-	void decode(string sourceFileName, string destFileName);
-	int buildFrequencyTable(string text);
-	/*void buildTree(int* frequencyTable);
-	void buildTree(int n, string letters, string tree);
-	void buildCodedTabe();
-	void encode(char letter, string* codedTable);*/
-	~HuffmanTree()
+	bool operator()(HoffmanNode* const& n1, HoffmanNode* const& n2)
 	{
-		delete root;
+		return n1->frequency >= n2->frequency;
 	}
+
 };
 

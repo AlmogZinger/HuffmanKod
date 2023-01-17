@@ -1,45 +1,74 @@
+/// <summary>
+/// DO encode type of huffman
+/// Afi Levi 021679857
+/// Almog Zinger 206554941
+/// </summary>
+/// <param name="num"></param>
+/// <param name="strct"></param>
+/// <returns></returns>
+
+#include "HoffmanNode.h"
 #include <iostream>
-#include <queue>
-#include <list>
 #include <string>
-#include <cmath>
-#include "huffman.h"
+/// <summary>
+/// DO encode type of huffman
+/// Afi Levi 
+/// Almog Zinger 206554941
+/// </summary>
+/// <param name="num"></param>
+/// <param name="strct"></param>
+/// <returns></returns>
 
-
+bool validTree(int num, string strct)
+{
+	int ones = 0;
+	for (auto str : strct)
+	{
+		if (str == '1') ones++;
+	}
+	return ones == num;
+}
 int main()
 {
-	/*int choice;
-	string word;
-	HuffmanTree* t;
-	cout << "enter 1 to encode a text\n";
-	cout << "enter 2 to decode a text\n";
-	cout << "enter 3 to exit\n";
-
+	cout << "or";
+	HoffmanNode tree;
+	string text, code, strct, letters;
+	int num, choice;
+	cout << "enter 1 to encode a text\n" << "enter 2 to decode a text\n" << "enter 3 to exit\n";
 	do
 	{
 		cin >> choice;
 		switch (choice)
 		{
 		case 1:
-
-			cout << "enter the original text" << endl;
-			cin >> word;
-
-			//Build Huffman tree given the data inside "word".
-			//Then find the code of each letter.
-			//Then print the output - number of leaves, order of letters, tree structure and the encoded text - according to the explanation in the exercise.
-			t = new HuffmanTree(word);
-
+			cout << "enter the original text\n";
+			cin >> text;
+			cout << "The encoded string is\n";
+			tree.textToCode(text);
 			break;
 		case 2:
-			cout << "ddd";
-			//input the number of leaves, the  order of letters, tree structure and the encoded text.
-			//build the Huffman Tree according to the tree strcture. put the letters in the leaves according to the given order. 
-			//Given the Huffman Tree and the encoded text, find the original text, and print it. 
-
-		
+			cout << "enter n ";
+			cin >> num;
+			cout << "\n enter the letters ";
+			cin >> letters;
+			cout << "\n enter the encoded structure ";
+			cin >> strct;
+			if (!validTree(num, strct))
+			{
+				cout << "ERROR\n";
+				break;
+			}
+			cout << "\n enter the encoded text ";
+			cin >> code;
+			cout << "\n The decoded string is ";
+			tree.codeToText(num, letters, strct, code);
+			cout << endl;
+			break;
+		case 3:
+			break;
+		default:
+			break;
 		}
-
-	} while (choice != 3);*/
+	} while (choice != 3);
 	return 0;
 }

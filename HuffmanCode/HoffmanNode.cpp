@@ -13,12 +13,12 @@ HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
     for (int i = 0; i < ALEFHBETHSIZE; i++)
     {
 	    if(freqTab[i] > 0)
-	    {
-            HoffmanNode* temp = new HoffmanNode(freqTab[i], (char)('a' + i));
+	    { 
+            HoffmanNode* temp = new HoffmanNode(freqTab[i], (char) i+ 'a');
             pQueue.push(temp);
 	    }
     }
-
+    
     HoffmanNode* first;
     do
     {
@@ -28,7 +28,7 @@ HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
         {
             HoffmanNode* second = pQueue.top();
             pQueue.pop();
-            HoffmanNode* temp = new HoffmanNode(first->frequency + second->frequency, ' ', first, second);
+            HoffmanNode* temp = new HoffmanNode(first->frequency + second->frequency,' ', first, second);
             pQueue.push(temp);
         }
     }
@@ -146,7 +146,18 @@ void HoffmanNode::treeStructure(HoffmanNode* node, string& strct)
     treeStructure(node->leftSon, strct);
     treeStructure(node->rightSon, strct);
 }
-
+void HoffmanNode::printTree(HoffmanNode* tree)
+{
+    if (tree == nullptr)
+        return;
+    if (tree->leftSon == nullptr)
+    {
+        cout << tree->nodeValue;
+        return;
+    }
+    printTree(tree->leftSon);
+    printTree(tree->rightSon);
+}
 void HoffmanNode::textToCode(string str)
 {
     int* freqTab;
@@ -163,18 +174,22 @@ void HoffmanNode::textToCode(string str)
     {
         if (freqTab[i] > 0)
         {
+             
             HoffmanNode* temp = new HoffmanNode(freqTab[i], (char)('a' + i));
             pQueue.push(temp);
         }
     }
-    while (!pQueue.empty())
+  /*  while (!pQueue.empty())
     {
         cout << pQueue.top()->nodeValue;
         pQueue.pop();
     }
-    cout << endl;
+    cout << endl;*/
 
     HoffmanNode* tree = buildTreeFromStr(str);
+    cout << tree->nodeValue << endl;
+    printTree(tree);
+    cout << endl;
     string strct = "";
     treeStructure(tree, strct);
     cout << strct << endl;

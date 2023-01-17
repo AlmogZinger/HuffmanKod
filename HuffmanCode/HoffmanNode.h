@@ -35,6 +35,7 @@ public:
 	void treeStructure(HoffmanNode* node, string& strct);
 	void textToCode(string str);
 	void codeToText(int num, string letters, string strct, string code);
+	void printTree(HoffmanNode* tree);
 };
 
 class compaireNodes

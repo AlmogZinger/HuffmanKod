@@ -1,108 +1,213 @@
+#include "HoffmanNode.h"
 #include <iostream>
 #include <queue>
-#include <list>
-#include <string>
-#include <cmath>
-#include "huffman.h"
-using namespace std;
 
-int frequencyTable[26] = { 0 };
+const int ALEFHBETHSIZE = 26;
 
-string codedTable[26] = { "" };
-
-void HuffmanTree::encodeLetters(HuffmanNode* root, string str)
+HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
 {
-	//if not a leaf 
-	if (root->left != nullptr)
-	{
-		encodeLetters(root->left, str += '0');
-		encodeLetters(root->right, str += '1');
-	}
-	//If a leaf
-	else
-	{
-		codedTable[CHAR_TO_INDEX(root->str[0])] = str;
-	}
+
+    priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
+    int* freqTab;
+    buildFreqTable(str, freqTab);
+    for (int i = 0; i < ALEFHBETHSIZE; i++)
+    {
+        if (freqTab[i] > 0)
+        {
+            HoffmanNode* temp = new HoffmanNode(freqTab[i], (char)('a' + i));
+            pQueue.push(temp);
+        }
+    }
+
+    HoffmanNode* first;
+    do
+    {
+        first = pQueue.top();
+        pQueue.pop();
+        if (!pQueue.empty())
+        {
+            HoffmanNode* second = pQueue.top();
+            pQueue.pop();
+            HoffmanNode* temp = new HoffmanNode(first->frequency + second->frequency, ' ', first, second);
+            pQueue.push(temp);
+        }
+    } while (!pQueue.empty());
+
+    return first;
 }
 
-string HuffmanTree::encodeTree(HuffmanNode* root)
+void HoffmanNode::treeFromCode(HoffmanNode*& node, string& str)
 {
-	string codeTree = "";
-	return encodeTree(root, codeTree);
+    if (str.front() == '1' || str.empty()) return;
+    node->leftSon = new HoffmanNode();
+    node->rightSon = new HoffmanNode();
+    str = str.substr(1);
+    treeFromCode(node->leftSon, str);
+    str = str.substr(1);
+    treeFromCode(node->rightSon, str);
 }
-string HuffmanTree::encodeTree(HuffmanNode * root, string code)
+
+HoffmanNode* HoffmanNode::buildTreeFromCode(string code)
 {
-	if (root == nullptr)
-		return "";
-	//If there is spilt - 
-	if (root->left != nullptr)
-	{
-		return encodeTree(root->right, encodeTree(root->left, code += '0'));
-	}
-	else //If got to leaf
-		return "1";
+    HoffmanNode* source = new HoffmanNode();
+    treeFromCode(source, code);
+    return source;
 }
-	
 
-/// <summary>
-/// update the FrequencyTable
-/// </summary>
-/// <param name="text"></param>
-/// <returns>The amount of chater in the text</returns>
-int HuffmanTree::buildFrequencyTable(string text)
+void HoffmanNode::buildFreqTable(string str, int*& freq)
 {
-	int numOfCherInText = 0;
-	for (int i = 0; i < text.size(); i++)
-	{
-		//add 1 to coounter if this is the first time
-		if (frequencyTable[CHAR_TO_INDEX(text[i])] == 0) numOfCherInText++;
-		frequencyTable[CHAR_TO_INDEX(text[i])]++;
-	}
-	return numOfCherInText; 
+    freq = new int [ALEFHBETHSIZE] { 0 };
+    do
+    {
+        freq[(int)(str.front() - 'a')]++;
+        str = str.substr(1);
+    } while (!str.empty());
 }
-HuffmanTree::HuffmanTree(string word)
+
+string HoffmanNode::lettersByFreq(HoffmanNode* source)
 {
-	HuffmanNode* first = new HuffmanNode();
-	string temp = "";
-	numOfCherInText = buildFrequencyTable(word);
-	for (int i = 0; i < 26; i++)
-	{
-		if (frequencyTable[i] > 0)
-		{
-			//Push to the queue 
-			temp = ('a' + i);
-			pQueue.push(new HuffmanNode(temp, frequencyTable[i]));
-		}
-	}
-	
-
-	//Build the tree
-	while (!pQueue.empty()) {
-		first = pQueue.top();
-		pQueue.pop();
-		if (!pQueue.empty())
-		{
-			HuffmanNode* secound = pQueue.top();
-			pQueue.pop();
-			pQueue.push(new HuffmanNode(first->str + secound->str, first->frequency + secound->frequency, first, secound));
-			secound = nullptr;
-		}
-	}
-
-	root = first;
-
-	//Encode the tree
-	treeCode = encodeTree(root);
-	//prepare the code table
-	encodeLetters(root);
-	
-	cout << "The encoded string is:\n"
-		<< numOfCherInText+"\n"
-		<< first->str+"\n"
-		<< treeCode+"\n";
-	for (int i = 0; i < word.size(); i++)
-	{
-		cout << codedTable[CHAR_TO_INDEX(word[i])];
-	}
-	cout <<endl;
+    string theStr;
+    inOrderTree(source, theStr);
+    return theStr;
 }
+
+void HoffmanNode::inOrderTree(HoffmanNode* node, string& str)
+{
+    if (node->leftSon == nullptr)
+    {
+        str += node->nodeValue;
+        return;
+    }
+    inOrderTree(node->leftSon, str);
+    inOrderTree(node->rightSon, str);
+}
+
+void HoffmanNode::insertValues(HoffmanNode* source, string& str)
+{
+    if (source->leftSon == nullptr)
+    {
+        source->nodeValue = str.front();
+        str = str.substr(1);
+        return;
+    }
+    insertValues(source->leftSon, str);
+    insertValues(source->rightSon, str);
+}
+
+void HoffmanNode::buildCodeTable(HoffmanNode* source, string code, string*& codeTab)
+{
+    if (source->leftSon == nullptr)
+    {
+        codeTab[(source->nodeValue - 'a')] = code;
+        return;
+    }
+    buildCodeTable(source->leftSon, code + "0", codeTab);
+    buildCodeTable(source->rightSon, code + "1", codeTab);
+}
+
+string HoffmanNode::codeToText(string str, HoffmanNode* source)
+{
+    string theText;
+    while (!str.empty())
+    {
+        encode(str, theText, source);
+    }
+    return theText;
+}
+
+void HoffmanNode::encode(string& code, string& text, HoffmanNode* node)
+{
+    if (node->leftSon == nullptr)
+    {
+        text += node->nodeValue;
+        return;
+    }
+    if (code.front() == '0')
+    {
+        code = code.substr(1);
+        encode(code, text, node->leftSon);
+    }
+    else if (code.front() == '1')
+    {
+        code = code.substr(1);
+        encode(code, text, node->rightSon);
+    }
+}
+
+void HoffmanNode::treeStructure(HoffmanNode* node, string& strct)
+{
+    if (node->rightSon == nullptr)
+    {
+        strct += '1';
+        return;
+    }
+    strct += '0';
+    treeStructure(node->leftSon, strct);
+    treeStructure(node->rightSon, strct);
+}
+void HoffmanNode::printTree(HoffmanNode* tree)
+{
+    if (tree == nullptr)
+        return;
+    if (tree->leftSon == nullptr)
+    {
+        cout << tree->nodeValue;
+        return;
+    }
+    printTree(tree->leftSon);
+    printTree(tree->rightSon);
+}
+void HoffmanNode::textToCode(string str)
+{
+    int* freqTab;
+    buildFreqTable(str, freqTab);
+    int num = 0;
+    for (int i = 0; i < ALEFHBETHSIZE; i++)
+    {
+        if (freqTab[i] > 0) num++;
+    }
+    cout << num << endl;
+
+    priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
+    for (int i = 0; i < ALEFHBETHSIZE; i++)
+    {
+        if (freqTab[i] > 0)
+        {
+            HoffmanNode* temp = new HoffmanNode(freqTab[i], (char)('a' + i));
+            pQueue.push(temp);
+        }
+    }
+    while (!pQueue.empty())
+    {
+        cout << pQueue.top()->nodeValue;
+        pQueue.pop();
+    }
+    cout << endl;
+
+    HoffmanNode* tree = buildTreeFromStr(str);
+
+    //printTree(tree);
+    string strct = "";
+    treeStructure(tree, strct);
+    cout << strct << endl;
+
+    string code = "";
+    string* codeTable = new string[ALEFHBETHSIZE];
+    buildCodeTable(tree, code, codeTable);
+
+    for (auto letter : str)
+    {
+        cout << codeTable[letter - 'a'];
+    }
+    cout << endl;
+}
+
+void HoffmanNode::codeToText(int num, string letters, string strct, string code)
+{
+    HoffmanNode* tree = buildTreeFromCode(strct);
+    insertValues(tree, letters);
+    string theText = codeToText(code, tree);
+    cout << theText;
+}
+
+
