@@ -1,5 +1,12 @@
 // header file to manage huffman tree
-
+/// <summary>
+/// DO encode type of huffman
+/// Afi Levi 021679857
+/// Almog Zinger 206554941
+/// </summary>
+/// <param name="num"></param>
+/// <param name="strct"></param>
+/// <returns></returns>
 #pragma once
 #include <string>
 

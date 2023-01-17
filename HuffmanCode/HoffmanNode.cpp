@@ -4,10 +4,11 @@
 
 const int ALEFHBETHSIZE = 26;
 
-HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
+
+HoffmanNode* HoffmanNode::buildTreeFromStr(string str, priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue)
 {
 
-    priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
+  /*  priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
     int* freqTab;
 	buildFreqTable(str, freqTab);
     for (int i = 0; i < ALEFHBETHSIZE; i++)
@@ -17,7 +18,7 @@ HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
             HoffmanNode* temp = new HoffmanNode(freqTab[i], (char) i+ 'a');
             pQueue.push(temp);
 	    }
-    }
+    }*/
     
     HoffmanNode* first;
     do
@@ -186,7 +187,7 @@ void HoffmanNode::textToCode(string str)
     }
     cout << endl;*/
 
-    HoffmanNode* tree = buildTreeFromStr(str);
+    HoffmanNode* tree = buildTreeFromStr(str, pQueue);
     cout << tree->nodeValue << endl;
     printTree(tree);
     cout << endl;
