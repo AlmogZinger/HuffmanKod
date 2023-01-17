@@ -1,14 +1,14 @@
+    
 #include "HoffmanNode.h"
 #include <iostream>
 #include <queue>
 
 const int ALEFHBETHSIZE = 26;
 
-
-HoffmanNode* HoffmanNode::buildTreeFromStr(string str, priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue)
+HoffmanNode* HoffmanNode::buildTreeFromStr(string str)
 {
-
-  /*  priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
+    //Build the priority queue by freq table
+    priority_queue<HoffmanNode*, vector<HoffmanNode*>, compaireNodes> pQueue;
     int* freqTab;
 	buildFreqTable(str, freqTab);
     for (int i = 0; i < ALEFHBETHSIZE; i++)
@@ -18,8 +18,8 @@ HoffmanNode* HoffmanNode::buildTreeFromStr(string str, priority_queue<HoffmanNod
             HoffmanNode* temp = new HoffmanNode(freqTab[i], (char) i+ 'a');
             pQueue.push(temp);
 	    }
-    }*/
-    
+    }
+    //Build the tree from the Queue
     HoffmanNode* first;
     do
     {
@@ -37,7 +37,11 @@ HoffmanNode* HoffmanNode::buildTreeFromStr(string str, priority_queue<HoffmanNod
 
     return first;
 }
-
+/// <summary>
+/// build empty tree fron code
+/// </summary>
+/// <param name="node"></param>
+/// <param name="str"></param>
 void HoffmanNode::treeFromCode(HoffmanNode*& node, string& str)
 {
     if (str.front() == '1' || str.empty()) return;
@@ -106,7 +110,12 @@ void HoffmanNode::buildCodeTable(HoffmanNode* source, string code, string*& code
     buildCodeTable(source->leftSon, code + "0", codeTab);
     buildCodeTable(source->rightSon, code + "1", codeTab);
 }
-
+/// <summary>
+/// ecoded the text
+/// </summary>
+/// <param name="str"></param>
+/// <param name="source"></param>
+/// <returns></returns>
 string HoffmanNode::codeToText(string str, HoffmanNode* source)
 {
     string theText;
@@ -187,7 +196,7 @@ void HoffmanNode::textToCode(string str)
     }
     cout << endl;*/
 
-    HoffmanNode* tree = buildTreeFromStr(str, pQueue);
+    HoffmanNode* tree = buildTreeFromStr(str);
     cout << tree->nodeValue << endl;
     printTree(tree);
     cout << endl;
