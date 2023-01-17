@@ -1,6 +1,6 @@
 /// <summary>
 /// DO encode type of huffman
-/// Afi Levi 
+/// Afi Levi 021679857
 /// Almog Zinger 206554941
 /// </summary>
 /// <param name="num"></param>
