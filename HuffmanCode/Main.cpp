@@ -10,7 +10,14 @@
 #include "HoffmanNode.h"
 #include <iostream>
 #include <string>
-
+/// <summary>
+/// DO encode type of huffman
+/// Afi Levi 
+/// Almog Zinger 206554941
+/// </summary>
+/// <param name="num"></param>
+/// <param name="strct"></param>
+/// <returns></returns>
 
 bool validTree(int num, string strct)
 {
