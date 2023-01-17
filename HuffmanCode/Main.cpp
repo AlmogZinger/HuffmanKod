@@ -26,7 +26,7 @@ int main()
 		case 1:
 			cout << "enter the original text\n";
 			cin >> text;
-			cout << "The encoded string is:\n";
+			cout << "The encoded string is\n";
 			tree.textToCode(text);
 			break;
 		case 2:
@@ -43,8 +43,9 @@ int main()
 			}
 			cout << "\n enter the encoded text ";
 			cin >> code;
-			cout << "\n The decoded string is: ";
+			cout << "\n The decoded string is ";
 			tree.codeToText(num, letters, strct, code);
+			cout << endl;
 			break;
 		case 3:
 			break;
